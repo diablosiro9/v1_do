@@ -4,26 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil Page</title>
+    <title>Perso Page</title>
     <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="logo-box">
         <h2>Ft_Transcendence</h2>
     </div>
-    <ul>
-        <li>
-            <a href = '#'>View Profile</a>
-        </li>
-        <li>
-            <a href = '#'>Historique</a>
-        </li>
-        <li>
-            <a href = '#'>Stats</a>
-        </li>
-        <li>
-            <a href = '#'>Change Setting</a>
-        </li>
+    <ul class="ul">
+        <li><a href = '#'>View Profile</a></li>
+        <li><a href = '#'>Historique</a></li>
+        <li><a href = '#'>Stats</a></li>
+        <li><a href = '#'>Change Setting</a></li>
         <!-- <div class="login-box">
             <button type="submit" onclick="window.location.href = '{% url 'tournament' %}'style="margin-right: 20px;"">Tournament</button>
         </div>

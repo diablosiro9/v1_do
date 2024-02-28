@@ -31,18 +31,31 @@ body {
 }
 
 .logo-box {
-  width: 400px;
-  padding: 40px;
+  position: absolute;
+  padding: 10px 20px 10px 20px;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
   background: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
+  width: fit-content; 
+  text-align: center;
+  line-height: normal;
 }
 
 .logo-box h2 {
-  margin: 0 0 30px;
+  margin: 10px auto;
   padding: 0;
-  color: #fff;
+  font-size: 80%;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fafafa;
+  position: center;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: colorLoop 5s linear infinite; /* Lance l'animation */
 }
 
 .login-box {
@@ -198,12 +211,13 @@ button[type="submit"] span:nth-child(4) {
 
 .ul {
   list-style: none;
+  text-decoration: none;
   float: right;
   display: flex;
   margin-top: 80px;
 }
 
-.ul li a {
+.ul li a{
   text-decoration: none;
   color:#fff;
   padding: 10px 20px;
@@ -217,4 +231,79 @@ button[type="submit"] span:nth-child(4) {
 .ul li a:hover {
   background-color: #fff;
   color: black;
+}
+
+.logo-box h2 span {
+  animation: colorLoop 10s infinite linear;
+}
+
+@keyframes colorLoop {
+  0% {
+    color: white; /* Début de la boucle, tout est blanc */
+}
+5% {
+    color: #03e9f4; /* 5% du temps écoulé, première lettre devient bleue */
+    text-shadow: 
+        1px 0 0 #03e9f4, /* Ombre portée à droite */
+        -1px 0 0 #03e9f4; /* Ombre portée à gauche */
+}
+10%, 20% {
+    color: #03e9f4; /* 10% à 20% du temps écoulé, première lettre reste bleue */
+    text-shadow: 
+        1px 0 0 #03e9f4, /* Ombre portée à droite */
+        -1px 0 0 #03e9f4; /* Ombre portée à gauche */
+}
+25% {
+    color: white; /* 25% du temps écoulé, première lettre redevient blanche */
+}
+30% {
+    color: #03e9f4; /* 30% du temps écoulé, deuxième lettre devient bleue */
+    text-shadow: 
+        1px 0 0 #03e9f4, /* Ombre portée à droite */
+        -1px 0 0 #03e9f4; /* Ombre portée à gauche */
+}
+35%, 45% {
+    color: #03e9f4; /* 35% à 45% du temps écoulé, deuxième lettre reste bleue */
+    text-shadow: 
+        1px 0 0 #03e9f4, /* Ombre portée à droite */
+        -1px 0 0 #03e9f4; /* Ombre portée à gauche */
+}
+50% {
+    color: white; /* 50% du temps écoulé, deuxième lettre redevient blanche */
+}
+55% {
+    color: #03e9f4; /* 55% du temps écoulé, troisième lettre devient bleue */
+    text-shadow: 
+        1px 0 0 #03e9f4, /* Ombre portée à droite */
+        -1px 0 0 #03e9f4; /* Ombre portée à gauche */
+}
+60%, 70% {
+    color: #03e9f4; /* 60% à 70% du temps écoulé, troisième lettre reste bleue */
+    text-shadow: 
+        1px 0 0 #03e9f4, /* Ombre portée à droite */
+        -1px 0 0 #03e9f4; /* Ombre portée à gauche */
+}
+75% {
+    color: white; /* 75% du temps écoulé, troisième lettre redevient blanche */
+}
+75%, 85% {
+  color: #03e9f4; /* 55% du temps écoulé, troisième lettre devient bleue */
+  text-shadow: 
+      1px 0 0 #03e9f4, /* Ombre portée à droite */
+      -1px 0 0 #03e9f4;
+/* Continuer avec les étapes pour chaque lettre */
+/* ... */
+}
+90%{
+  color: white; /* 100% du temps écoulé, tout redevient blanc */
+}
+90%, 99% {
+  color: #03e9f4; /* 55% du temps écoulé, troisième lettre devient bleue */
+  text-shadow: 
+      1px 0 0 #03e9f4, /* Ombre portée à droite */
+      -1px 0 0 #03e9f4;
+}
+100% {
+    color: white; /* 100% du temps écoulé, tout redevient blanc */
+}
 }
