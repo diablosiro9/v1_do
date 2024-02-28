@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil Page</title>
+    <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+</head>
+<body>
+    <div class="logo-box">
+        <h2>Ft_Transcendence</h2>
+    </div>
+    <ul>
+        <li>
+            <a href = '#'>View Profile</a>
+        </li>
+        <li>
+            <a href = '#'>Historique</a>
+        </li>
+        <li>
+            <a href = '#'>Stats</a>
+        </li>
+        <li>
+            <a href = '#'>Change Setting</a>
+        </li>
+        <!-- <div class="login-box">
+            <button type="submit" onclick="window.location.href = '{% url 'tournament' %}'style="margin-right: 20px;"">Tournament</button>
+        </div>
+        <div class="login-box">
+            <button type="submit" onclick="window.location.href = '{% url 'mode' %}'style="margin-right: 20px;"">Mode</button>
+        </div>
+        <div class="perso-button">
+            <button type="submit" onclick="window.location.href = '{% url 'perso' %}'">Espace Perso</button>
+        </div> -->
+    </ul>
+</body>
+</html>

@@ -10,15 +10,23 @@
 <body>
     <div class="login-box">
         <h2 style="text-align: center;">Ft_Transcendence</h2>
+        <button type="submit" onclick="window.location.href = '{% url 'index' %}'style="margin-right: 20px;""> <span></span>
+        <span></span>
+        <span></span>Play</button>
+        <button type="submit" onclick="window.location.href = '{% url 'tournament' %}'style="margin-right: 20px;""> <span></span>
+            <span></span>
+            <span></span>Tournament</button>
+        <button type="submit" onclick="window.location.href = '{% url 'mode' %}'style="margin-right: 20px;""> <span></span>
+            <span></span>
+            <span></span>Mode</button>
     </div>
-    <div class="login-box">
-        <button type="submit" onclick="window.location.href = '{% url 'index' %}'">Play</button>
-    </div>
-    <div class="login-box">
-        <button type="submit" onclick="window.location.href = '{% url 'tournament' %}'">Tournament</button>
-    </div>
-    <div class="login-box">
-        <button type="submit" onclick="window.location.href = '{% url 'mode' %}'">Mode</button>
+    <div class="perso-button">
+        <button type="submit" onclick="window.location.href = '{% url 'perso' %}'"><span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Espace Perso</button>
+        
     </div>
 </body>
 </html>
