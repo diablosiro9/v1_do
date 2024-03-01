@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <link rel="stylesheet" href="{% static 'stylesheet.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <canvas id="pongCanvas" width="800" height="400"></canvas>
+    <script src="{% static 'js/game.js' %}"></script>      
+    <div class="chat-bar">
+        <input type="text" name="chat" required="">
+        <label>Chat</label>
+    </div>
+    <button class="leave-button">Leave / Go Back</button>
+    <button class="profile-button">Opponent's Profile</button>
+</body>
+</html>
