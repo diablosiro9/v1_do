@@ -7,7 +7,7 @@ const player1 = {
     y: canvas.height / 2 - 50, // Position initiale au milieu de l'écran
     width: 10,
     height: 100,
-    color: 'black', // Couleur noire
+    color: 'blue', // Couleur noire
     speed: 5 // Vitesse de déplacement
 };
 
@@ -16,7 +16,7 @@ const player2 = {
     y: canvas.height / 2 - 50,
     width: 10,
     height: 100,
-    color: 'black',
+    color: 'red',
     speed: 5
 };
 
@@ -28,6 +28,27 @@ function drawPlayers() {
     ctx.fillStyle = player2.color;
     ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
 }
+
+// Définition des joueurs
+let currentPlayer = null; // Le joueur actuellement sélectionné
+
+// Fonction pour choisir le joueur
+function choosePlayer(player) {
+    currentPlayer = player;
+}
+
+// Gestion de la sélection du joueur
+document.addEventListener('keydown', function(event) {
+    // Si la touche '1' est pressée, choisir le joueur 1
+    if (event.key === '1') {
+        choosePlayer(player1);
+    }
+    // Si la touche '2' est pressée, choisir le joueur 2
+    else if (event.key === '2') {
+        choosePlayer(player2);
+    }
+});
+
 
 // Gérer le mouvement des plateformes des joueurs
 document.addEventListener('keydown', function(event) {
@@ -76,6 +97,8 @@ function drawScores() {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'black'; // Remplacez 'blue' par la couleur de votre choix
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.strokeStyle = 'white';
     ctx.lineWidth = 2;
@@ -93,6 +116,13 @@ function draw() {
     }
     if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
         ball.dx = -ball.dx;
+    }
+    if (currentPlayer) {
+        if (event.key === 'w' && currentPlayer.y > 0) {
+            currentPlayer.y -= currentPlayer.speed; // Déplacer vers le haut
+        } else if (event.key === 's' && currentPlayer.y + currentPlayer.height < canvas.height) {
+            currentPlayer.y += currentPlayer.speed; // Déplacer vers le bas
+        }
     }
 }
 
