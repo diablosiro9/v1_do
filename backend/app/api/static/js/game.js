@@ -35,10 +35,14 @@ let currentPlayer = null; // Le joueur actuellement sélectionné
 // Fonction pour choisir le joueur
 function choosePlayer(player) {
     currentPlayer = player;
+    console.log('Player selected:', currentPlayer);
 }
 
 // Gestion de la sélection du joueur
-document.addEventListener('keydown', function(event) {
+// Gérer le mouvement des plateformes des joueurs
+
+function handleKeyEvents(event) {
+    console.log('Touche pressée : ', event.key);
     // Si la touche '1' est pressée, choisir le joueur 1
     if (event.key === '1') {
         choosePlayer(player1);
@@ -47,25 +51,18 @@ document.addEventListener('keydown', function(event) {
     else if (event.key === '2') {
         choosePlayer(player2);
     }
-});
-
-
-// Gérer le mouvement des plateformes des joueurs
-document.addEventListener('keydown', function(event) {
-    // Player 1
-    if (event.key === 'w' && player1.y > 0) {
-        player1.y -= player1.speed; // Déplacer vers le haut
-    } else if (event.key === 's' && player1.y + player1.height < canvas.height) {
-        player1.y += player1.speed; // Déplacer vers le bas
+    if (currentPlayer) {
+        // Gérer le mouvement du joueur sélectionné
+        if (event.key === 'w' && currentPlayer.y > 0) {
+            currentPlayer.y -= currentPlayer.speed; // Déplacer vers le haut
+        } else if (event.key === 's' && currentPlayer.y + currentPlayer.height < canvas.height) {
+            currentPlayer.y += currentPlayer.speed; // Déplacer vers le bas
+        }
     }
+}
+    
+document.addEventListener('keydown', handleKeyEvents);
 
-    // Player 2
-    if (event.key === 'ArrowUp' && player2.y > 0) {
-        player2.y -= player2.speed; // Déplacer vers le haut
-    } else if (event.key === 'ArrowDown' && player2.y + player2.height < canvas.height) {
-        player2.y += player2.speed; // Déplacer vers le bas
-    }
-});
 
 const ball = {
     x: canvas.width / 2,
@@ -83,6 +80,47 @@ function drawBall() {
     ctx.closePath();
 }
 
+function resetBall() {
+    // Réinitialiser la position de la balle au centre de la zone de jeu
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    // Réinitialiser la direction de la balle (vous pouvez ajuster la direction selon votre logique de jeu)
+    ball.dx = -ball.dx;
+    ball.dy = -ball.dy;
+    // Réinitialiser les positions des plateformes des joueurs
+    player1.y = canvas.height / 2 - 50;
+    player2.y = canvas.height / 2 - 50;
+}
+
+
+function handleCollision() {
+    if (ball.x - ball.radius <= 0) {
+        // La balle a atteint le mur gauche, le joueur 2 marque un point
+        scorePlayer2++;
+        resetBall(); // Réinitialiser la position de la balle
+        return; // Sortir de la fonction après la gestion de la collision
+    }
+    if (ball.x + ball.radius >= canvas.width) {
+        // La balle a atteint le mur droit, le joueur 1 marque un point
+        scorePlayer1++;
+        resetBall(); // Réinitialiser la position de la balle
+        return; // Sortir de la fonction après la gestion de la collision
+    }
+    // Collision avec le joueur 1   
+    if (ball.x - ball.radius <= player1.x + player1.width &&
+        ball.y >= player1.y && ball.y <= player1.y + player1.height) {
+        ball.dx = -ball.dx; // Inverser la direction horizontale de la balle
+    }
+
+    // Vérifier la collision avec le joueur 2
+    if (ball.x + ball.radius >= player2.x &&
+        ball.y >= player2.y && ball.y <= player2.y + player2.height) {
+        ball.dx = -ball.dx; // Inverser la direction horizontale de la balle
+    }
+    // Collision avec le joueur 2 (à implémenter de manière similaire)
+
+    // Collision avec les bords du terrain (à implémenter de manière similaire)
+}
 
 // Mettez en place un système de points
 let scorePlayer1 = 0;
@@ -95,6 +133,7 @@ function drawScores() {
     ctx.fillText('Player 2: ' + scorePlayer2, canvas.width - 150, 30);
 }
 
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'black'; // Remplacez 'blue' par la couleur de votre choix
@@ -105,6 +144,7 @@ function draw() {
     ctx.moveTo(canvas.width / 2, 0);
     ctx.lineTo(canvas.width / 2, canvas.height);
     ctx.stroke();
+    handleCollision();
     drawBall();
     drawScores();
     drawPlayers();
@@ -117,28 +157,69 @@ function draw() {
     if (ball.x + ball.dx > canvas.width - ball.radius || ball.x + ball.dx < ball.radius) {
         ball.dx = -ball.dx;
     }
-    if (currentPlayer) {
-        if (event.key === 'w' && currentPlayer.y > 0) {
-            currentPlayer.y -= currentPlayer.speed; // Déplacer vers le haut
-        } else if (event.key === 's' && currentPlayer.y + currentPlayer.height < canvas.height) {
-            currentPlayer.y += currentPlayer.speed; // Déplacer vers le bas
-        }
-    }
 }
 
-// setInterval(draw, 10);
+function update() {
+    draw(); // Dessiner le jeu
+    // setInterval(update, 10);
+    // Vous pouvez également mettre d'autres logiques de mise à jour ici
+}
 
 console.log(canvas);
 console.log(ctx);
 console.log(player1);
 console.log(player2);
 
-document.addEventListener('keydown', function(event) {
-    console.log('Touche pressée : ', event.key);
-    // Ajoutez d'autres instructions de débogage ou de traitement ici
-});
 
 
 window.onload = function() {
-    draw();
+    setInterval(update, 16);
+   
+
+    const input = document.getElementById('chat-input');
+
+    input.addEventListener('focus', function() {
+        input.setAttribute('placeholder', 'Type your message here...');
+        input.style.color = '#fff'; // Change la couleur du texte de l'input
+        input.style.opacity = '0.5'; // Rend le texte de l'input complètement opaque
+    });
+
+    input.addEventListener('input', function() {
+        if (input.value === '') {
+            input.setAttribute('placeholder', 'Type your message here...');
+            input.style.color = '#fff'; // Change la couleur du texte de l'input
+            input.style.opacity = '0.5'; // Rend le texte de l'input complètement opaque
+        } else {
+            input.removeAttribute('placeholder');
+            input.style.color = 'initial'; // Rétablit la couleur par défaut du texte de l'input
+            input.style.opacity = '0.5'; // Rend le texte de l'input complètement opaque
+        }
+    });
+
+    input.addEventListener('blur', function() {
+        if (input.value === '') {
+            input.removeAttribute('placeholder');
+            input.style.color = 'transparent'; // Rend le texte de l'input transparent
+            input.style.opacity = '0'; // Rend le texte de l'input complètement transparent
+        }
+    });
+
+
+    document.addEventListener('keydown', function(event) {
+        // Si une flèche est pressée et qu'un joueur est sélectionné
+        if (!currentPlayer && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+            // Empêcher le défilement de la page lorsque les touches de déplacement sont utilisées
+            event.preventDefault();
+        }
+        else if (currentPlayer) {
+            event.preventDefault();
+
+            // Gérer le mouvement du joueur sélectionné
+            if (event.key === 'ArrowUp' && currentPlayer.y > 0) {
+                currentPlayer.y -= currentPlayer.speed; // Déplacer vers le haut
+            } else if (event.key === 'ArrowDown' && currentPlayer.y + currentPlayer.height < canvas.height) {
+                currentPlayer.y += currentPlayer.speed; // Déplacer vers le bas
+            }
+        }
+    });
 };
