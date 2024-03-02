@@ -36,6 +36,7 @@ let currentPlayer = null; // Le joueur actuellement sélectionné
 function choosePlayer(player) {
     currentPlayer = player;
     console.log('Player selected:', currentPlayer);
+    startGame();
 }
 
 // Gestion de la sélection du joueur
@@ -80,6 +81,12 @@ function drawBall() {
     ctx.closePath();
 }
 
+function stopBall() {
+    // Arrêter le mouvement de la balle
+    ball.dx = 0;
+    ball.dy = 0;
+}
+
 function resetBall() {
     // Réinitialiser la position de la balle au centre de la zone de jeu
     ball.x = canvas.width / 2;
@@ -92,6 +99,77 @@ function resetBall() {
     player2.y = canvas.height / 2 - 50;
 }
 
+let timer; // Variable pour stocker l'identifiant du timer
+let timeRemaining = 60; // Durée initiale du chronomètre en secondes (2 minutes 30 secondes)
+
+function startGame() {
+    clearInterval(timer); // Assurez-vous qu'aucun autre timer n'est actif
+
+    // Démarrez le chronomètre uniquement si un joueur est sélectionné
+    if (currentPlayer) {
+        timer = setInterval(function () {
+            updateTimerDisplay(); // Mettre à jour l'affichage du chronomètre
+            if (--timeRemaining < 0) {
+                clearInterval(timer);
+                endGame(); // Arrêter le chronomètre une fois le temps écoulé
+                // Insérer ici toute logique à effectuer une fois le chronomètre écoulé
+            }
+        }, 1000);
+    }
+}
+
+function updateTimerDisplay() {
+    let minutes = Math.floor(timeRemaining / 60);
+    let seconds = timeRemaining % 60;
+
+    // Formater les minutes et les secondes avec des zéros devant si nécessaire
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    // Mettre à jour le texte du bouton avec le temps restant
+    document.getElementById('chrono-button').textContent = minutes + ":" + seconds;
+}
+
+function startTimer(duration) {
+    let timer = duration;
+    setInterval(function () {
+        let minutes = parseInt(timer / 60, 10);
+        let seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        document.getElementById('chrono-button').textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = 0;
+            clearInterval(timer);
+            // Insérer ici toute logique à effectuer une fois le chronomètre écoulé
+        }
+    }, 1000);
+
+    // Mettre à jour l'affichage du chronomètre immédiatement après le démarrage
+    updateTimerDisplay(duration);
+}
+
+
+function endGame() {
+    // Afficher le gagnant et le perdant en fonction du score
+    let winner, loser;
+    if (scorePlayer1 > scorePlayer2) {
+        winner = "Joueur 1";
+        loser = "Joueur 2";
+    } else if (scorePlayer2 > scorePlayer1) {
+        winner = "Joueur 2";
+        loser = "Joueur 1";
+    } else {
+        winner = "Personne (égalité)";
+        loser = "Personne (égalité)";
+    }
+    alert(`Le temps est écoulé! ${winner} remporte la partie avec ${Math.max(scorePlayer1, scorePlayer2)} points contre ${loser} avec ${Math.min(scorePlayer1, scorePlayer2)} points.`);
+    resetBall();
+    stopBall();
+}
 
 function handleCollision() {
     if (ball.x - ball.radius <= 0) {
@@ -117,6 +195,8 @@ function handleCollision() {
         ball.y >= player2.y && ball.y <= player2.y + player2.height) {
         ball.dx = -ball.dx; // Inverser la direction horizontale de la balle
     }
+
+    
     // Collision avec le joueur 2 (à implémenter de manière similaire)
 
     // Collision avec les bords du terrain (à implémenter de manière similaire)
@@ -160,7 +240,8 @@ function draw() {
 }
 
 function update() {
-    draw(); // Dessiner le jeu
+    if (currentPlayer && timeRemaining)
+        draw(); // Dessiner le jeu
     // setInterval(update, 10);
     // Vous pouvez également mettre d'autres logiques de mise à jour ici
 }
@@ -174,7 +255,7 @@ console.log(player2);
 
 window.onload = function() {
     setInterval(update, 16);
-   
+    updateTimerDisplay();
 
     const input = document.getElementById('chat-input');
 
@@ -192,12 +273,22 @@ window.onload = function() {
         } else {
             input.removeAttribute('placeholder');
             input.style.color = 'initial'; // Rétablit la couleur par défaut du texte de l'input
-            input.style.opacity = '0.5'; // Rend le texte de l'input complètement opaque
+            input.style.opacity = '1'; // Rend le texte de l'input complètement opaque
         }
+        // if (input.value !== '') {
+        //     label.style.display = 'none';
+        // } else {
+        //     label.style.display = 'block';
+        // }
     });
 
     input.addEventListener('blur', function() {
         if (input.value === '') {
+            input.removeAttribute('placeholder');
+            input.style.color = 'transparent'; // Rend le texte de l'input transparent
+            input.style.opacity = '0'; // Rend le texte de l'input complètement transparent
+        }
+        else if (input.value) {
             input.removeAttribute('placeholder');
             input.style.color = 'transparent'; // Rend le texte de l'input transparent
             input.style.opacity = '0'; // Rend le texte de l'input complètement transparent

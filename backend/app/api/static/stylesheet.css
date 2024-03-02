@@ -321,18 +321,22 @@ ul li a:hover {
   position: relative;
   width: 100%;
   height: 50px;
-  background-color: #083aff;
+  background-color: #0a5491;
+  color: #03a9f4;
+  border-radius: 20px; 
 }
 
 .chat-bar input {
   width: calc(100% - 20px); /* Laisser de la place pour le label */
-  padding: 10px 0;
+  padding: 10px;
   font-size: 16px;
-  color: #fff;
+  color: #fff !important;
+  opacity: 1;
   border: none;
-  border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
+  text-decoration: none;
+  
 }
 
 .chat-bar label {
@@ -341,23 +345,28 @@ ul li a:hover {
   left: 50%; /* Centre horizontalement */
   transform: translate(-50%, -50%);
   padding: 10px;
-  font-size: 16px;
-  color: #fff; /* Couleur initiale du label */
+  font-size: 18px;
+  font-weight: bold;
+  color: #03a9f4;/* Couleur initiale du label */
   pointer-events: none;
   transition: .5s;
   opacity: 1; /* Rendre le label initialement visible */
+  text-decoration: none;
 }
 
 .chat-bar input:focus ~ label {
   top: 0;
   left: 5px; /* Décalage vers la gauche */
   color: #03e9f4; 
+  outline: none; 
 }
 
 /* Placeholder pour le champ de saisie */
 .chat-bar input::placeholder {
   color: #fff; /* Couleur du placeholder */
   opacity: 1;/* Opacité du placeholder */
+  outline: none; 
+
 }
 
 
@@ -441,3 +450,23 @@ ul li a:hover {
   transform: scaleX(1);
 }
 
+#chrono-button {
+  background-color: #0b3861; /* Bleu foncé */
+  color: #03a9f4; /* Bleu électrique */
+  border: none;
+  border-radius: 20px; /* Coins arrondis */
+  padding: 15px 30px; /* Espacement interne */
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s; /* Transition fluide */
+}
+
+#chrono-button:hover {
+  background-color: #0a5491; /* Bleu foncé plus foncé au survol */
+}
+
+#chrono-button:active {
+  background-color: #0a5491; /* Bleu foncé plus foncé lors du clic */
+  color: #02a1e7; /* Bleu électrique plus clair lors du clic */
+}

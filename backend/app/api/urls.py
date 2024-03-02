@@ -13,6 +13,7 @@ urlpatterns = [
     path('accueil/', TemplateView.as_view(template_name='accueil.html'), name='accueil'),
     path('tournament/', TemplateView.as_view(template_name='tournament.html'), name='tournament'),
     path('mode/', TemplateView.as_view(template_name='mode.html'), name='mode'),
+    path('friends/', TemplateView.as_view(template_name='friends.html'), name='friends'),
     path('perso/', TemplateView.as_view(template_name='perso.html'), name='perso'),
     path('play/', TemplateView.as_view(template_name='play.html'), name='play'),
 
