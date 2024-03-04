@@ -13,19 +13,30 @@
         <h2>Ft_Transcendence</h2>
     </div>
     <ul class="ul">
-        <li><a href = '#'>View Profile</a></li>
-        <li><a href = '#'>Historique</a></li>
-        <li><a href = '#'>Stats</a></li>
-        <li><a href = '#'>Change Setting</a></li>
-        <!-- <div class="login-box">
-            <button type="submit" onclick="window.location.href = '{% url 'tournament' %}'style="margin-right: 20px;"">Tournament</button>
-        </div>
-        <div class="login-box">
-            <button type="submit" onclick="window.location.href = '{% url 'mode' %}'style="margin-right: 20px;"">Mode</button>
-        </div>
-        <div class="perso-button">
-            <button type="submit" onclick="window.location.href = '{% url 'perso' %}'">Espace Perso</button>
-        </div> -->
+        <li><a href="#" id="viewProfile">View Profile</a></li>
+        <li><a href="#">Historique</a></li>
+        <li><a href="#">Stats</a></li>
+        <li><a href="#">Change Setting</a></li>
     </ul>
+
+    <div id="profileData"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#viewProfile').click(function(event) {
+                event.preventDefault(); 
+                $.ajax({
+                    url: '{% url "generate_profile_json" %}',
+                    type: 'GET',
+                    success: function(data) {
+                        $('#profileData').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

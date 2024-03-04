@@ -33,7 +33,7 @@ services:
     volumes:
       - ft_transcendence_database-data:/var/lib/postgresql/data
     depends_on:
-      - ft_transcendence_database  # Corrected indentation
+      - ft_transcendence_database  
 
 networks:
   ft_transcendence_network:
