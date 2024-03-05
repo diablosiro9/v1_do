@@ -6,13 +6,14 @@ until pg_isready -U mehdi -d ft_transcendence_database -h ft_transcendence_datab
   sleep 1
 done
 
-python manage.py createsuperuser
-
-# Once the database service is available, run migrations
-python ./app/manage.py migrate
+python /usr/src/app/app/manage.py createsuperuser
 
 # Collect static files
-python ./app/manage.py collectstatic --no-input
+python /usr/src/app/app/manage.py collectstatic --no-input
+
+# Once the database service is available, run migrations
+python /usr/src/app/app/manage.py migrate
 
 # Start the Django development server
-exec python ./app/manage.py runserver 0.0.0.0:443
+exec python /usr/src/app/app/manage.py runserver 0.0.0.0:443
+

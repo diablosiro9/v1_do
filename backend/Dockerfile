@@ -18,7 +18,7 @@ EXPOSE 443
 
 # Add entrypoint script to wait for database availability
 COPY entrypoint.sh /usr/src/app/entrypoint.sh
-RUN chmod +x /usr/src/app/entrypoint.sh
+RUN chmod +777 /usr/src/app/entrypoint.sh
 
 # Run the entrypoint script instead of directly starting the Django server
 CMD ["/usr/src/app/entrypoint.sh"]

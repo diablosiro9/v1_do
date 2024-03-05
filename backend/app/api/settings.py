@@ -127,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATICFILES_DIRS = [
-    BASE_DIR / "app/api/static/js",
+    "/usr/src/app/app/api/static/js",
 ]
 
 STATIC_URL = '/static/'

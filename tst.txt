@@ -1,0 +1,2 @@
+Coonexion a la db 
+psql -U mehdi -d ft_transcendence_database -h ft_transcendence_database -p 5432
