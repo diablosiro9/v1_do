@@ -1,2 +1,9 @@
 Coonexion a la db 
 psql -U mehdi -d ft_transcendence_database -h ft_transcendence_database -p 5432
+
+
+Pour le moment tu as de nouvelles urls due a la configuration du backend je peux les changer a tous moment en fonction de ce que tu voudras.
+Tous les anciennes url ont maintenant un prefixe /api
+Ex:
+http://localhost:8080/
+http://localhost:8080/api

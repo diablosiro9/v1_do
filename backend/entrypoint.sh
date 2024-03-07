@@ -6,14 +6,24 @@ until pg_isready -U mehdi -d ft_transcendence_database -h ft_transcendence_datab
   sleep 1
 done
 
-python /usr/src/app/app/manage.py createsuperuser
+# Generate random numbers and fill a vector (example)
+# Insert your code here
+#Echo creating app_folder
 
-# Collect static files
-python /usr/src/app/app/manage.py collectstatic --no-input
 
-# Once the database service is available, run migrations
-python /usr/src/app/app/manage.py migrate
 
-# Start the Django development server
-exec python /usr/src/app/app/manage.py runserver 0.0.0.0:443
 
+
+# Start the Django development server or any other necessary commands
+#python /usr/src/app/app/manage.py createsuperuser
+#echo "APRES CREATE USER"
+#echo "APRES start api"
+#python -m pip install Pillow
+#echo "APRES install pillow"
+python /usr/src/manage.py makemigrations
+python /usr/src/manage.py migrate
+#echo "APRES migrate"
+#python ./app/manage.py collectstatic --no-input
+#echo "APRES STATIC"
+exec python manage.py runserver 0.0.0.0:443
+#echo "APRES run server"

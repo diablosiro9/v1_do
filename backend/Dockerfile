@@ -3,9 +3,11 @@ FROM python:3
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-client \
+        vim \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app
+
+WORKDIR /usr/src/
 
 RUN pip install --upgrade pip  
 RUN pip install django-bootstrap-toolkit
@@ -17,8 +19,8 @@ COPY . .
 EXPOSE 443
 
 # Add entrypoint script to wait for database availability
-COPY entrypoint.sh /usr/src/app/entrypoint.sh
-RUN chmod +777 /usr/src/app/entrypoint.sh
+#COPY entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +777 /usr/src/entrypoint.sh
 
 # Run the entrypoint script instead of directly starting the Django server
-CMD ["/usr/src/app/entrypoint.sh"]
+CMD ["/usr/src/entrypoint.sh"]
