@@ -4,6 +4,11 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-client \
         vim \
+        curl \
+        gnupg2 \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g truffle \
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -14,6 +19,7 @@ RUN pip install django-bootstrap-toolkit
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install psycopg2
+RUN pip install requests
 COPY . .
 
 EXPOSE 443

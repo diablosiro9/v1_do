@@ -6,31 +6,41 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.shortcuts import redirect
+import requests
+from requests import get
+import logging
+from users.views import *
 
-def index(request):
-    return render(request, 'index.html')
+from django.shortcuts import get_object_or_404
+from users.models import User  
 
-# @login_required
+logger = logging.getLogger(__name__)
+
+def login2(request):
+    return render(request, 'login.html', {'form': LoginForm() })
+
+def register(request):
+    return render(request, 'register.html', {'form': RegistrationForm() })
+
 def accueil(request):
-    return render(request, 'accueil.html')
+    return render(request, 'accueil.html', {'current_user': request.user})
+
+def settings(request):
+    # Your view logic goes here
+    return render(request, 'settings.html')
+
+def perso(request):
+    return render(request, 'perso.html')
+
 
 def generate_profile_json(request):
+    profile_instance = get_object_or_404(User, username=request.user.username)
     profile_data = {
-        "username": "testdb",
-        "elo_tst": 10,
-        "ce que tu veux": "test test"
+        'username': profile_instance.username,
+        'email': profile_instance.email,
+        'elo': profile_instance.elo,
+        'image': profile_instance.image
     }
     return JsonResponse(profile_data)
 
-
-def create_user(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        # user = User.objects.create_user(username=username, password=password)
-        # if request.user.is_authenticated:
-        #     return HttpResponseRedirect('/accueil/')  # Redirect to accueil page if already authenticated
-        # else:
-        #     return HttpResponseRedirect('/accueil/')  # Redirect to index page if not authenticated
-    else:
-        return render(request, 'index.html')
