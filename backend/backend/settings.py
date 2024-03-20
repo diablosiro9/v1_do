@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
-
+    'users',
+    'games',
+    'tournaments',
+    'matchmaking',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'users.views.aouth.AouthRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -166,6 +169,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
+        'api': {  # Your app
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
     },
 }
 
@@ -181,5 +189,16 @@ AUTH_USER_MODEL = 'users.User'
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 
+MEDIA_URL = '/users/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-import os
+MIDDLEWARE_EXEMPT_URLS = [
+    '/admin/',
+    '/api/register/',
+    '/api/login/',
+    '/api/accueil/',
+    '/users/aouth_register_form/',
+    '/users/aouth_login_form/',
+]
+
+# AUTO_LOGOUT_TIME = 1800
